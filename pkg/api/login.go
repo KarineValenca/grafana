@@ -93,7 +93,7 @@ func (hs *HTTPServer) LoginView(c *models.ReqContext) {
 				// the user is already logged so instead of rendering the login page with error
 				// it should be redirected to the home page.
 				log.Debug("Ignored invalid redirect_to cookie value: %v", redirectTo)
-				redirectTo = setting.AppSubUrl + "/"
+				redirectTo = hs.Cfg.AppSubUrl + "/"
 			}
 			middleware.DeleteCookie(c.Resp, "redirect_to", hs.cookieOptionsFromCfg)
 			c.Redirect(redirectTo)
