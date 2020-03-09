@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"reflect"
 
 	"github.com/grafana/grafana/pkg/services/alerting"
 	"github.com/grafana/grafana/pkg/services/dashboards"
@@ -341,7 +342,15 @@ func GetHomeDashboard(c *m.ReqContext) Response {
 		return Error(500, "Failed to load home dashboard", err)
 	}
 
-	if c.HasUserRole(m.ROLE_ADMIN) && !c.HasHelpFlag(m.HelpFlagGettingStartedPanelDismissed) {
+	startedPanel := os.Getenv("GF_GETTING_STARTED_PANEL")
+
+	if reflect.ValueOf(startedPanel).Kind() != reflect.String || (startedPanel != "false" && startedPanel != "true") {
+		startedPanel = "true"
+	}
+
+	fmt.Print(startedPanel)
+	
+	if c.HasUserRole(m.ROLE_ADMIN) && !c.HasHelpFlag(m.HelpFlagGettingStartedPanelDismissed) && startedPanel == "true" {
 		addGettingStartedPanelToHomeDashboard(dash.Dashboard)
 	}
 
