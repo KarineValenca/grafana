@@ -59,7 +59,6 @@ ENV PATH="/usr/share/grafana/bin:$PATH" \
     GF_PATHS_LOGS="/var/log/grafana" \
     GF_PATHS_PLUGINS="/var/lib/grafana/plugins" \
     GF_PATHS_PROVISIONING="/etc/grafana/provisioning" \
-    GF_DEFAULT_THEME="dark" \
     GF_GETTING_STARTED_PANEL="true"
 
 WORKDIR $GF_PATHS_HOME
